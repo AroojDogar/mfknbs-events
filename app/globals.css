@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy-950: #0f0c2e;
+  --color-navy-900: #17134a;
+  --color-navy-800: #221d63;
+  --color-navy-700: #2d2780;
+  --color-navy-600: #3d3699;
+  --color-navy-100: #e6e4f5;
+  --color-navy-50: #f2f1fa;
+
+  --color-saffron-600: #c9741a;
+  --color-saffron-500: #e8932f;
+  --color-saffron-400: #f2ac55;
+  --color-saffron-200: #fbdcb2;
+  --color-saffron-100: #fdeedb;
+
+  --color-paper: #faf7f0;
+  --color-paper-2: #f3eee2;
+  --color-ink: #1a1830;
+  --color-muted: #5f5b77;
+  --color-line: #e4ddcc;
+
+  --font-display: "Fraunces Variable", Georgia, serif;
+  --font-sans: "Manrope Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-spin-slow: spin 60s linear infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Paper grain for a printed, premium feel */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+@media print { body::after { display: none; } }
+
+.text-outline { -webkit-text-stroke: 1px rgb(255 255 255 / 0.18); color: transparent; }
+.text-outline-ink { -webkit-text-stroke: 1px rgb(34 29 99 / 0.12); color: transparent; }
+
+::selection { background: var(--color-saffron-200); color: var(--color-navy-900); }
+
+.font-display { font-variation-settings: "SOFT" 30, "WONK" 0; }
+
+/* Fine grain + grid used on dark sections */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+.bg-grid-ink {
+  background-image:
+    linear-gradient(to right, rgb(34 29 99 / 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(34 29 99 / 0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.placeholder-stripes {
+  background-color: var(--color-navy-50);
+  background-image: repeating-linear-gradient(135deg, rgb(34 29 99 / 0.05) 0 1px, transparent 1px 14px);
+}
+
+.eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
+
+/* ---------- Booklet print ---------- */
+@page { size: A4; margin: 0; }
+@media print {
+  .no-print { display: none !important; }
+  body { background: white; }
+  .print-page { break-after: page; box-shadow: none !important; margin: 0 !important; border-radius: 0 !important; }
+  .avoid-break { break-inside: avoid; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
